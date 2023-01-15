@@ -5,3 +5,10 @@ use std::net::SocketAddr;
 pub struct ConnectedNodes {
     pub nodes: Vec<SocketAddr>,
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Hardware {
+    pub cpu: String,
+    pub ram: String,
+    pub storage: String,
+}

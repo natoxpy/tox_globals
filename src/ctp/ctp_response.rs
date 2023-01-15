@@ -2,36 +2,26 @@ use serde::{Serialize, Deserialize};
 
 use crate::ctp::responses::ConnectedNodes;
 
+use super::responses::Hardware;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum CtpResponse {
     ConnectedNodes(ConnectedNodes),
+    Hardware(Hardware),
     Empty,
     Mishandle(String),
 }
 
-impl CtpResponse {
-    pub fn convert_to_json(&self) -> String {
-        match self {
-            CtpResponse::ConnectedNodes(res) => serde_json::to_string(&res).unwrap(),
-            CtpResponse::Empty => String::from(""),
-            CtpResponse::Mishandle(err) => String::from(err),
-        }
-    }
-}
-
-
-
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ResponseFormat {
-    pub body: CtpResponse,
+    pub content: CtpResponse,
     pub code: u16, // 200, 404, 500
 }
 
 impl ResponseFormat {
-    pub fn new(body: CtpResponse, code: u16) -> Self {
+    pub fn new(content: CtpResponse, code: u16) -> Self {
         Self {
-            body,
+            content,
             code,
         }
     }
